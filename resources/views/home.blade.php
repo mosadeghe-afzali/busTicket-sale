@@ -88,6 +88,12 @@
                         <span class="cd-signin-modal__error">Error message here!</span>
                     </p>
 
+                    <label><b>جنسیت</b></label><br>
+                    <label for="female">زن</label>
+                    <input type="radio" name="gender" id="female" value="female" checked>
+                    <label for="male">مرد</label>
+                    <input type="radio" name="gender" id="male" value="male"><br><br>
+
                     <p class="cd-signin-modal__fieldset">
                         <label class="cd-signin-modal__label cd-signin-modal__label--password cd-signin-modal__label--image-replace" for="signup-password">پسورد</label>
                         <input class="cd-signin-modal__input cd-signin-modal__input--full-width cd-signin-modal__input--has-padding cd-signin-modal__input--has-border" id="signup-password" type="text"  placeholder="پسورد">
