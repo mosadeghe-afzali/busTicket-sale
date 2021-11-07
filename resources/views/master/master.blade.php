@@ -1,4 +1,4 @@
-<html>
+<html dir="rtl">
 <head >
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -8,6 +8,8 @@
     @yield('cssLinks')
 </head>
 <body>
+
+
 @yield('content')
 </body>
 @yield('jsLinks')

@@ -35,7 +35,13 @@ class Handler extends ExceptionHandler
     public function register()
     {
         $this->reportable(function (Throwable $e) {
-            //
+
         });
+
+//        if(!config('APP_DEBUG')) {
+//            $this->renderable(function (Throwable $e) {
+//                return 'something went worn please try later';
+//            });
+//        }
     }
 }
