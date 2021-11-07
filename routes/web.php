@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +16,17 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
+})->name('home');
+
+
+Route::group(['prefix' => '/users'], function(){
+
+    Route::get('/register', function(){
+        return view('users.register');
+    })->name('users.create');
+
+    Route::get('/loginPage', function(){
+        return view('users.login');
+    })->name('loginPage');
+
 });
