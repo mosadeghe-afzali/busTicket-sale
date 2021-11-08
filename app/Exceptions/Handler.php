@@ -38,10 +38,10 @@ class Handler extends ExceptionHandler
 
         });
 
-//        if(!config('APP_DEBUG')) {
-//            $this->renderable(function (Throwable $e) {
-//                return 'something went worn please try later';
-//            });
-//        }
+        if(!config('APP_DEBUG')) {
+            $this->renderable(function (Throwable $e) {
+                return 'something went worn please try later';
+            });
+        }
     }
 }

@@ -24,19 +24,19 @@
             <div class="collapse navbar-collapse navbar-1">
                 <ul class="site-navigation nav">
                     <li>
-                        <a href="" class="  mb-4" data-toggle="modal" data-target="#modalLoginForm">ورود</a>
+                        <a href="" class="  mb-4" data-toggle="modal" data-target="#modalLoginForm"></a>
                     </li>
                     <li>
-                        <a href="#">team</a>
+                        <a href="#"></a>
                     </li>
                     <li>
-                        <a href="{{route('loginPage')}}">logout</a>
+                        <a href="{{route('loginPage')}}">ورود</a>
                     </li>
                     <li>
                         <a href="{{route('users.create')}}">ثبت نام</a>
                     </li>
                     <li>
-                        <a href="" class="  mb-4" data-toggle="modal" data-target="#modalLoginForm">ورود</a>
+                        <a href="" class="  mb-4" data-toggle="modal" data-target="#modalLoginForm"></a>
                     </li>
                 </ul>
             </div>
@@ -74,7 +74,7 @@
                     </div><!-- /header-text -->
                 </div>
                 <div class="item">
-                    <img src="https://unsplash.s3.amazonaws.com/batch%209/barcelona-boardwalk.jpg" alt="Second slide">
+                    <img src="{{asset('css/header.png')}}" alt="Second slide">
                     <!-- Static Header -->
                     <div class="header-text hidden-xs">
                         <div class="col-md-12 text-center">
@@ -88,7 +88,7 @@
                     </div><!-- /header-text -->
                 </div>
                 <div class="item">
-                    <img src="https://unsplash.s3.amazonaws.com/batch%209/barcelona-boardwalk.jpg" alt="Third slide">
+                    <img src="{{asset('css/header.png')}}" alt="Third slide">
                     <!-- Static Header -->
                     <div class="header-text hidden-xs">
                         <div class="col-md-12 text-center">
