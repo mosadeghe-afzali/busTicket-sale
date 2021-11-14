@@ -3,12 +3,12 @@
 namespace App\Http\Requests;
 
 use App\Traits\Response;
-use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Http\Response as HTTPResponse;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Http\Response as HTTPResponse;
 
-class LoginRequest extends FormRequest
+class ScheduleStoreRequest extends FormRequest
 {
 
     use Response;
@@ -30,8 +30,11 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required',
-            'password' => 'required',
+            'date' => 'required|date_format:Y-m-d h:i:s',
+            'origin' => 'required|string|max:20',
+            'destination' => 'required|string|max:20',
+            'price' => 'required|numeric',
+            'vehicle_id' => 'required|numeric'
         ];
     }
 
