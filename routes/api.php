@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\VehicleController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -23,4 +24,18 @@ Route::group(['prefix' => '/users'], function (){
     Route::post('/store', [AuthController::class, 'store'])->name('users.store');
     Route::post('/login', [AuthController::class, 'login'])->name('login');
 });
+
+Route::group(['prefix' => '/vehicles', 'middleware' => ['auth:api', 'permissions:admin,super_user,company']], function (){
+    Route::post('/store', [VehicleController::class, 'store'])->name('vehicles.store');
+    Route::put('/update/{id}', [VehicleController::class,'update'])->name('vehicle.update');
+    Route::delete('/delete/{id}', 'VehicleController@destroy');
+});
+
+Route::group(['prefix' => 'schedules', 'middleware' => ['auth:api', 'permissions:admin,super_user,company']], function(){
+    Route::post('/store', 'ScheduleController@store');
+    Route::put('/update/{id}', 'ScheduleController@update');
+
+});
+
+
 

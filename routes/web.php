@@ -28,5 +28,7 @@ Route::group(['prefix' => '/users'], function(){
     Route::get('/loginPage', function(){
         return view('users.login');
     })->name('loginPage');
-
 });
+Route::get('/addVehicle', function(){
+    return view('panel.addVehicle');
+})->name('addVehicle');
