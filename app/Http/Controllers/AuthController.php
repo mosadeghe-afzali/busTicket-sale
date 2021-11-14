@@ -2,18 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Response as HTTPResponse;
-use Illuminate\Support\Facades\Validator;
-use App\repositories\UserRoleRepository;
-use App\Http\Controllers\Controller;
+use App\Traits\Response;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Requests\UserRequest;
+use App\Http\Requests\LoginRequest;
 use App\repositories\RoleRepository;
 use App\repositories\UserRepository;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
-use App\Http\Requests\UserRequest;
-use Illuminate\Http\Request;
-use App\Exceptions\Response;
-
+use App\repositories\UserRoleRepository;
+use Illuminate\Http\Response as HTTPResponse;
 
 class AuthController extends Controller
 {
@@ -23,7 +21,7 @@ class AuthController extends Controller
     public $roleRepository;
     public $userRoleRepository;
 
-    // injection of UserRepository, RoleRepository and RoleUserRepository dependencies to this class:
+    /* injection of UserRepository, RoleRepository and RoleUserRepository dependencies to this class: */
     public function __construct(UserRepository $userRepository, RoleRepository $roleRepository, UserRoleRepository $userRoleRepository)
     {
         $this->userRepository = $userRepository;
@@ -31,20 +29,10 @@ class AuthController extends Controller
         $this->userRoleRepository = $userRoleRepository;
     }
 
-    // register of a new user and set its role in database
-    public function store(Request $request)
+    /* register of a new user and set its role in database */
+    public function store(UserRequest $request)
     {
         $data = $request->all();
-
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|max:20|unique:users',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed',
-        ]);
-
-        if ($validator->fails()) {
-            return $this->getErrors($validator->errors()->first(), HTTPResponse::HTTP_UNPROCESSABLE_ENTITY);
-        }
 
         $data['password'] = Hash::make($request->password);
 
@@ -63,19 +51,9 @@ class AuthController extends Controller
 
     }
 
-    // login users in site
-    public function login(Request $request)
+    /* login users in site */
+    public function login(LoginRequest $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
-
-        if ($validator->fails())
-        {
-            return $this->getErrors($validator->errors()->first(), HTTPResponse::HTTP_UNPROCESSABLE_ENTITY);
-        }
-
         $user = $this->userRepository->checkUser($request->email);
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
