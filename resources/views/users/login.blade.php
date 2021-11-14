@@ -1,5 +1,5 @@
 @extends('master.master')
-
+@section('title', 'login')
 @section('cssLinks')
 
     <link rel="stylesheet" href="{{asset('css/registerFormCss.css')}}">

@@ -18,7 +18,7 @@ class CreateCompaniesTable extends Migration
             $table->string('name');
             $table->bigInteger('user_id')->unsigned()->index();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('logo');
+            $table->string('logo')->nullable();
             $table->timestamps();
         });
     }

@@ -19,7 +19,7 @@
                     <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
                         <div class="card-body p-4 p-md-5">
                             <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">اطلاعات وسیله نقلیه</h3>
-                            <form action="" method="post">
+                            <form action="{{route('vehicles.store')}}" method="post">
                                 @csrf
 
                                 <div class="row">
