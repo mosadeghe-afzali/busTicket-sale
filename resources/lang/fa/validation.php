@@ -178,7 +178,14 @@ return [
         "available" => "موجود",
         "size" => "اندازه",
         "file" => "فایل",
-        "fullname" => "نام کامل"
+        "fullname" => "نام کامل",
+        "destination" => "مقصد",
+        "origin" => "مبدا",
+        "tag" => "پلاک",
+        "model" => "مدل ماشین",
+        "capacity" => "ظرفیت",
+        "company_name" => "نام شرکت",
+        "vehicle_id" => "کد وسیله نقلیه",
     ],
 
 ];

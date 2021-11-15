@@ -17,6 +17,11 @@ class CompanySeeder extends Seeder
     {
         $data = [
             [
+                'id' =>1,
+                'name' => 'ماهان',
+                'user_id' => 1,
+            ],
+            [
             'id' => 2,
            'name' => 'سیروسفر',
             'user_id' => 5,

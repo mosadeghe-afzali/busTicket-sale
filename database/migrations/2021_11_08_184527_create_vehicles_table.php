@@ -20,8 +20,8 @@ class CreateVehiclesTable extends Migration
             $table->text('description')->nullable();
             $table->bigInteger('company_id')->unsigned()->index();
             $table->foreign('company_id')->references('id')->on('companies');
-            $table->timestamps();
             $table->string('tag')->unique();
+            $table->timestamps();
         });
     }
 
