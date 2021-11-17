@@ -2,6 +2,7 @@
 namespace App\repositories;
 
 use App\Models\Schedule;
+use Illuminate\Support\Facades\DB;
 
 class ScheduleRepository
 {
@@ -19,6 +20,20 @@ class ScheduleRepository
             $schedule->update($data);
 
             return $schedule;
+    }
+    public function reserveDates($vehicleId)
+    {
+
+        $reserved = Schedule::where('vehicle_id', $vehicleId)->select(DB::raw('DATE(date) as date'))->pluck('date')->toArray();
+
+        return $reserved;
+    }
+
+    public function list()
+    {
+        $scheduls = Schedule::query()->get();
+
+        return $scheduls;
     }
 
 }
