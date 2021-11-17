@@ -26,15 +26,15 @@ Route::group(['prefix' => '/users'], function (){
 });
 
 Route::group(['prefix' => '/vehicles', 'middleware' => ['auth:api', 'permissions:admin,super_user,company']], function (){
-    Route::post('/store', [VehicleController::class, 'store'])->name('vehicles.store');
-    Route::put('/update/{id}', [VehicleController::class,'update'])->name('vehicle.update');
+    Route::post('/store', 'VehicleController@store')->name('vehicles.store');
+    Route::put('/update/{id}', 'VehicleController@update')->name('vehicle.update');
     Route::delete('/delete/{id}', 'VehicleController@destroy');
+    Route::get('/', 'VehicleController@index');
 });
 
 Route::group(['prefix' => 'schedules', 'middleware' => ['auth:api', 'permissions:admin,super_user,company']], function(){
     Route::post('/store', 'ScheduleController@store');
     Route::put('/update/{id}', 'ScheduleController@update');
-
 });
 
 

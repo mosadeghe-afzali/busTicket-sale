@@ -10,30 +10,27 @@ use Illuminate\Http\Response as HTTPResponse;
 class CheckPermission
 {
     use Response;
+
     /**
      * Handle an incoming request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
+     * @param \Illuminate\Http\Request $request
+     * @param \Closure $next
      * @return mixed
      */
     public function handle(Request $request, Closure $next, ...$roles)
     {
 
-
         $user = auth('api')->user();
-        if($user)
-        {
+        if ($user) {
             $userRoles = $user->roles()->pluck('role')->toArray();
 
-
-
-                if (!array_intersect($roles, $userRoles)) {
-                    return $this->getErrors(
-                        'شما به این بخش دسترسی ندارید',
-                        HTTPResponse::HTTP_FORBIDDEN
-                    );
-                }
+            if (!array_intersect($roles, $userRoles)) {
+                return $this->getErrors(
+                    'شما به این بخش دسترسی ندارید',
+                    HTTPResponse::HTTP_FORBIDDEN
+                );
+            }
 
         }
 

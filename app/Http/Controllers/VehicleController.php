@@ -26,11 +26,16 @@ class VehicleController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+      @return \Illuminate\Http\Response
      */
     public function index()
     {
-        //
+        $vehicles = $this->vehicleRepository->list();
+
+       return $this->getMessage(
+            $vehicles,
+            HTTPResponse::HTTP_OK
+        );
     }
 
     /**

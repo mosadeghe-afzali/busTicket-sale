@@ -2,6 +2,7 @@
 namespace App\repositories;
 
 use App\Models\Vehicle;
+use phpseclib3\File\ASN1\Maps\OrganizationalUnitNames;
 
 class VehicleRepository
 {
@@ -11,6 +12,7 @@ class VehicleRepository
         $vehicle = Vehicle::create($data);
         return $vehicle;
     }
+
     /* query for update a vehicle */
     public function update($data, $id)
     {
@@ -19,6 +21,7 @@ class VehicleRepository
 
         return $vehicle;
     }
+
    /* query for delete a vehicle */
     public function delete($id)
     {
@@ -27,10 +30,17 @@ class VehicleRepository
 
         return $vehicle;
     }
+
     /* getting a vehicle id */
     public function vehicleId($tag)
     {
         $vehicle = Vehicle::query()->where('tag', $tag)->value('id');
+    }
+
+    public function list()
+    {
+        $vehicles = Vehicle::query()->get();
+        return $vehicles;
     }
 
 }

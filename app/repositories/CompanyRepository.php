@@ -12,6 +12,6 @@ class CompanyRepository
         $id = Company::where('name', $name)->value('id');
         return $id;
     }
-    
+
 
 }

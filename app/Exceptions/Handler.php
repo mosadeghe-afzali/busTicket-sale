@@ -6,6 +6,7 @@ use App\Http\Requests\VehicleStoreRequest;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\ValidationException;
 use Throwable;
 use Illuminate\Http\Response as HTTPResponse;
 
@@ -40,6 +41,10 @@ class Handler extends ExceptionHandler
      */
     public function register()
     {
+        $this->renderable(function (ValidationException $e, $request){
+
+
+    });
 
 
         $this->renderable(function (HttpResponseException $e, $request) {
