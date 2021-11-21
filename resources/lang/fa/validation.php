@@ -57,7 +57,7 @@ return [
         'array'   => ':attribute باید :value ایتم یا بیشتر را داشته باشد.',
     ],
     "image"            => ":attribute باید تصویر باشد.",
-    "in"               => ":attribute انتخاب شده، معتبر نیست.",
+    "in"               => ":attribute .انتخاب شده، معتبر نیست",
     "integer"          => ":attribute باید نوع داده ای عددی (integer) باشد.",
     "ip"               => ":attribute باید IP آدرس معتبر باشد.",
     'ipv4'             => ':attribute باید یک ادرس درست IPv4 باشد.',
@@ -186,6 +186,8 @@ return [
         "capacity" => "ظرفیت",
         "company_name" => "نام شرکت",
         "vehicle_id" => "کد وسیله نقلیه",
+        'order' => 'فیلد مرتب سازی',
+        'filter' => 'فیلد'
     ],
 
 ];

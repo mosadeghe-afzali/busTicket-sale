@@ -13,22 +13,10 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/', function () {
-    return view('home');
-})->name('home');
-
-
-Route::group(['prefix' => '/users'], function(){
-
-    Route::get('/register', function(){
-        return view('users.register');
-    })->name('users.create');
-
-    Route::get('/loginPage', function(){
-        return view('users.login');
-    })->name('loginPage');
+    return view('welcome');
 });
-Route::get('/addVehicle', function(){
-    return view('panel.addVehicle');
-})->name('addVehicle');
+
+
+
+

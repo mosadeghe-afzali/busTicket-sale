@@ -37,5 +37,9 @@ Route::group(['prefix' => 'schedules', 'middleware' => ['auth:api', 'permissions
     Route::put('/update/{id}', 'ScheduleController@update');
 });
 
+Route::get('/companies', 'CompanyController@list');
+Route::get('/comments', 'CompanyController@getComments');
+Route::post('/list', 'ScheduleController@list');
+
 
 
