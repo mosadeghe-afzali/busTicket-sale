@@ -13,5 +13,12 @@ class CompanyRepository
         return $id;
     }
 
+    /* fetch list of companies in database */
+    public function list()
+    {
+        $companies = Company::query()->select('name', 'logo')->take(5)->get();
+
+        return $companies;
+    }
 
 }

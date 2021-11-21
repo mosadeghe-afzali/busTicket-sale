@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Traits\Response;
 use App\repositories\ScheduleRepository;
+use App\Http\Requests\ScheduleListRequest;
 use App\Http\Requests\ScheduleStoreRequest;
 use Illuminate\Http\Response as HTTPResponse;
 use App\Validations\CheckRegisterScheduleDate;
@@ -60,18 +61,6 @@ class ScheduleController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-
-    /**
      * Update the specified schedule in database.
      *
      * @param \Illuminate\Http\Request $request
@@ -93,14 +82,32 @@ class ScheduleController extends Controller
         );
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    /* display list of vehicles in a specific date for a specific origin and destination */
+    public function list(ScheduleListRequest $request)
     {
-        //
+//        $this->checkRegisterScheduleDate->checkIsPast($request->date);
+
+        $data = [
+            'date' => $request->date,
+            'origin' => $request->origin,
+            'destination' => $request->destination,
+            'filter' => $request->filter,
+            'order' => $request->order ?? 'asc'
+        ];
+
+        $schedules = $this->scheduleRepository->getScheduleList($data);
+
+        if ($schedules->isEmpty())
+            return $this->getMessage(
+                'موردی یافت نشد',
+                HTTPResponse::HTTP_OK
+            );
+
+        return $this->getMessage(
+            $schedules,
+            HTTPResponse::HTTP_OK
+        );
+
     }
+
 }

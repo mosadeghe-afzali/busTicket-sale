@@ -1,4 +1,5 @@
 <?php
+
 namespace App\repositories;
 
 use App\Models\Schedule;
@@ -13,27 +14,41 @@ class ScheduleRepository
 
         return $schedule;
     }
-  /* query for update a schedule */
+
+    /* query for update a schedule */
     public function update($id, $data)
     {
         $schedule = Schedule::find($id);
-            $schedule->update($data);
+        $schedule->update($data);
 
-            return $schedule;
+        return $schedule;
     }
+
+    /* fetch all dates match to request date for register a new schedule */
     public function reserveDates($vehicleId)
     {
-
         $reserved = Schedule::where('vehicle_id', $vehicleId)->select(DB::raw('DATE(date) as date'))->pluck('date')->toArray();
 
         return $reserved;
     }
 
+    /* fetch list of all travel schedules*/
     public function list()
     {
         $scheduls = Schedule::query()->get();
 
         return $scheduls;
+    }
+
+    /* fetch available vehicles in a specific date, origin and destination */
+    public function getScheduleList($data)
+    {
+        $vehicleSelect = ['id', 'model', 'capacity', 'description'];
+
+        $schedules = Schedule::query()->ScheduleVehicle()->ScheduleSelection($data)
+            ->Filter($data['filter'], $data['order'])->get();
+
+        return $schedules;
     }
 
 }

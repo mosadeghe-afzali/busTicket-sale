@@ -3,10 +3,9 @@
 
 namespace App\Validations;
 
-
-use App\Exceptions\ReserveFailedException;
 use App\Traits\Response;
-use Carbon\Carbon;
+use Hekmatinasser\Verta\Verta;
+use App\Exceptions\ReserveFailedException;
 use Illuminate\Http\Response as HTTPResponse;
 
 class CheckRegisterScheduleDate
@@ -21,8 +20,7 @@ class CheckRegisterScheduleDate
         if(in_array(Date("Y-m-d", strtotime($date)), $allDates))
         {
 
-            throw new ReserveFailedException(response()->json(
-                'تاریخ انتخابی دردسترس نیست!',
+            throw new ReserveFailedException(response()->json('تاریخ انتخابی دردسترس نیست!',
                 HTTPResponse::HTTP_REQUESTED_RANGE_NOT_SATISFIABLE));
         }
     }
@@ -32,7 +30,7 @@ class CheckRegisterScheduleDate
      */
     public function checkIsPast($date)
     {
-        if(Carbon::parse($date)->isPast())
+        if(Verta::parse($date)->isPast())
         {
             throw new ReserveFailedException($this->getErrors('this date is past',
                 HTTPResponse::HTTP_REQUESTED_RANGE_NOT_SATISFIABLE));
