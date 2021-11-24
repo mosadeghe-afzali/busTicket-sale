@@ -5,6 +5,7 @@ namespace App\repositories;
 
 
 use App\Models\Comment;
+use App\Models\companyInfo;
 
 class CommentRepository
 {
@@ -16,5 +17,7 @@ class CommentRepository
 
         return $comments;
     }
+
+
 
 }

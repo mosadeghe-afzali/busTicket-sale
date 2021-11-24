@@ -2,6 +2,7 @@
 
 namespace App\repositories;
 
+use App\Models\companyInfo;
 use App\Models\Schedule;
 use Illuminate\Support\Facades\DB;
 
@@ -50,5 +51,7 @@ class ScheduleRepository
 
         return $schedules;
     }
+
+
 
 }

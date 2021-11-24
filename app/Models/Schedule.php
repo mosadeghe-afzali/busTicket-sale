@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Schedule extends Model
 {
@@ -32,8 +32,16 @@ class Schedule extends Model
 
     public function scopeScheduleSelection($query, $data)
     {
-        return $query->where(DB::raw('DATE(date)'), $data['date'])->where('origin', $data['origin'])
-            ->where('destination', $data['destination'])->select('date', 'origin', 'destination', 'price',
+//        return $query->where(DB::raw('DATE(date)'), $data['date'])->where('origin', $data['origin'])
+//            ->where('destination', $data['destination'])->select('date', 'origin', 'destination', 'price',
+//                'vehicles.capacity', 'vehicles.model', 'vehicles.description');
+
+        return $query->where(DB::raw('DATE(date)'), $data['date'])
+            ->when($data['origin'] ?? false,
+                fn($query) => $query->where('origin', $data['origin']))->
+            when($data['destination'] ?? false,
+                fn($query) => $query->where('destination', $data['destination']))->
+            select('date', 'end_date', 'origin', 'destination', 'price',
                 'vehicles.capacity', 'vehicles.model', 'vehicles.description');
     }
 

@@ -43,5 +43,15 @@ class CompanyController extends Controller
         );
     }
 
+    public function info()
+    {
+        $info = $this->companyRepository->indo();
+
+        return $this->getMessage(
+            $info,
+            HTTPResponse::HTTP_OK
+        );
+    }
+
 
 }

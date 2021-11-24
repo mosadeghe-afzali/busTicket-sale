@@ -33,8 +33,8 @@ class ScheduleListRequest extends FormRequest
     {
         return [
             'date' => 'required|date_format:Y-m-d',
-            'origin' => 'required|string|max:20',
-            'destination' => 'required|string|max:20',
+            'origin' => 'nullable|string|max:20',
+            'destination' => 'nullable|string|max:20',
             'filter' => ['nullable',
                 Rule::in(
                     ["date", "price", "vehicles.capacity", "vehicles.model"]

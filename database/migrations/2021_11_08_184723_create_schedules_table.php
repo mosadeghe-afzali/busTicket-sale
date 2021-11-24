@@ -17,8 +17,8 @@ class CreateSchedulesTable extends Migration
             $table->id();
             $table->dateTime('date');
             $table->string('origin');
-            $table->string('destination');
             $table->bigInteger('price');
+            $table->string('destination');
             $table->bigInteger('vehicle_id')->unsigned()->index();
             $table->foreign('vehicle_id')->references('id')->on('vehicles');
             $table->timestamps();

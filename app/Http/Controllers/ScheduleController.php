@@ -69,7 +69,7 @@ class ScheduleController extends Controller
      */
     public function update(ScheduleStoreRequest $request, $id)
     {
-        $this->checkRegisterScheduleDate->checkFailedDates($request->date, $this->scheduleRepository->reserveDates($request->vehicle_id));
+//        $this->checkRegisterScheduleDate->checkFailedDates($request->date, $this->scheduleRepository->reserveDates($request->vehicle_id));
         $this->checkRegisterScheduleDate->checkIsPast($request->date);
 
         $data = $request->all();
@@ -85,10 +85,11 @@ class ScheduleController extends Controller
     /* display list of vehicles in a specific date for a specific origin and destination */
     public function list(ScheduleListRequest $request)
     {
-//        $this->checkRegisterScheduleDate->checkIsPast($request->date);
+        $this->checkRegisterScheduleDate->checkIsPast($request->date);
 
         $data = [
             'date' => $request->date,
+            'end_date' => $request->end_date,
             'origin' => $request->origin,
             'destination' => $request->destination,
             'filter' => $request->filter,

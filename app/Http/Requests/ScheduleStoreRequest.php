@@ -31,6 +31,7 @@ class ScheduleStoreRequest extends FormRequest
     {
         return [
             'date' => 'required|date_format:Y-m-d H:i:s',
+            'end_date' => 'required|date_format:Y-m-d H:i:s',
             'origin' => 'required|string|max:20',
             'destination' => 'required|string|max:20',
             'price' => 'required|numeric',
