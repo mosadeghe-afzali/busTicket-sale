@@ -10,9 +10,13 @@ class ReserveFailedException extends Exception
 {
     public function render()
     {
-        return $this->getMessage();
-
-
+        return response()->json([
+            $this->getMessage(),
+            200
+        ]);
     }
 
 }
+//$( document ).ready(function() {
+//    console.log( "ready!" );
+//});

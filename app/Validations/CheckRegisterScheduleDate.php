@@ -32,8 +32,7 @@ class CheckRegisterScheduleDate
     {
         if(Verta::parse($date)->isPast())
         {
-            throw new ReserveFailedException($this->getErrors('this date is past',
-                HTTPResponse::HTTP_REQUESTED_RANGE_NOT_SATISFIABLE));
+            throw new ReserveFailedException('this date is past');
         }
     }
 
