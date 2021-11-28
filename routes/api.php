@@ -40,6 +40,8 @@ Route::group(['prefix' => 'schedules', 'middleware' => ['auth:api', 'permissions
 Route::get('/companies', 'CompanyController@list');
 Route::get('/comments', 'CompanyController@getComments');
 Route::post('/list', 'ScheduleController@list');
+Route::get('/info', 'CompanyController@info');
 
+Route::get('/reserve/{id}', 'ReservationController@availableSeats');
 
-
+Route::post('/reservation/{id}', 'ReservationController@doReserve' )->middleware('auth:api');
