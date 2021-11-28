@@ -12,7 +12,6 @@ class UserRepository
     {
         $user = User::create($data);
         $userId = $user->id;
-        $user->createToken('userToken')->accessToken;
 
         return $user;
     }

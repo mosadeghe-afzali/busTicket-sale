@@ -40,7 +40,16 @@ class VehicleRepository
     public function list()
     {
         $vehicles = Vehicle::query()->get();
+
         return $vehicles;
     }
+
+    public function getcapacity($id)
+    {
+        $capacity = Vehicle::query()->where('id', $id)->value('capacity');
+
+        return $capacity;
+    }
+
 
 }

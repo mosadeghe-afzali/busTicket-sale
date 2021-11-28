@@ -52,6 +52,19 @@ class ScheduleRepository
         return $schedules;
     }
 
+    public function getVehicleId($id)
+    {
+        $id = Schedule::query()->where('id', $id)->value('vehicle_id');
+
+        return $id;
+    }
+
+    public function getPrice($id)
+    {
+        $price = Schedule::query()->where('id', $id)->value('price');
+
+        return $price;
+    }
 
 
 }

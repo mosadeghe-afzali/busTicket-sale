@@ -3,7 +3,7 @@
 namespace App\repositories;
 
 use App\Models\Company;
-use App\Models\companyInfo;
+use App\Models\CompanyInfo;
 
 class CompanyRepository
 {
@@ -24,7 +24,7 @@ class CompanyRepository
 
     public function indo()
     {
-        $info = companyInfo::query()->get();
+        $info = CompanyInfo::query()->select('about_us', 'registration_date')->get();
 
         return $info;
     }
