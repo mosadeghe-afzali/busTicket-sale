@@ -47,12 +47,12 @@ class Handler extends ExceptionHandler
     });
 
 
-        $this->renderable(function (HttpResponseException $e, $request) {
-            return $this->getErrors(
-                'this is a validation error'. $e->getMessage(),
-            HTTPResponse::HTTP_UNPROCESSABLE_ENTITY
-            );
-        });
+//        $this->renderable(function (HttpResponseException $e, $request) {
+//            return $this->getErrors(
+//                'this is a validation error'. $e->getMessage(),
+//            HTTPResponse::HTTP_UNPROCESSABLE_ENTITY
+//            );
+//        });
 
 //        if(!config('APP_DEBUG')) {
 //            $this->renderable(function (Throwable $e) {
