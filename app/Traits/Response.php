@@ -3,7 +3,7 @@ namespace App\Traits;
 
 trait Response
 {
-    public function getErrors($error, $code)
+    public function getErrors($error, $code,)
     {
         return response()->json([
             'error' => $error,
@@ -11,11 +11,12 @@ trait Response
         ]);
     }
 
-    public function getMessage($message, $code)
+    public function getMessage($message, $code, $response = null)
     {
         return response()->json([
             'message' => $message,
             'status' => $code,
+            'response' => $response,
         ]);
     }
 }
