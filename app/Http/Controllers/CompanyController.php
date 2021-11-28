@@ -27,9 +27,11 @@ class CompanyController extends Controller
         $companies = $this->companyRepository->list();
 
         return $this->getMessage(
+            'لیست شرکت ها با موفقیت بازبابی شد.',
+            HTTPResponse::HTTP_OK,
             $companies,
-            HTTPResponse::HTTP_OK
         );
+
     }
 
     /* display comments of companies about site*/
@@ -38,8 +40,10 @@ class CompanyController extends Controller
         $comments = $this->commentRepository->getComment();
 
         return $this->getMessage(
+            'لیست کامنت ها با موفقیت بازبابی شد.',
+            HTTPResponse::HTTP_OK,
             $comments,
-            HTTPResponse::HTTP_OK
+
         );
     }
 
@@ -48,8 +52,9 @@ class CompanyController extends Controller
         $info = $this->companyRepository->indo();
 
         return $this->getMessage(
+            'اطلاعات شرکت با موفقیت بازبابی شد.',
+            HTTPResponse::HTTP_OK,
             $info,
-            HTTPResponse::HTTP_OK
         );
     }
 

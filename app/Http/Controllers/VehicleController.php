@@ -33,9 +33,11 @@ class VehicleController extends Controller
         $vehicles = $this->vehicleRepository->list();
 
        return $this->getMessage(
-            $vehicles,
-            HTTPResponse::HTTP_OK
-        );
+           'لیست اتوبوس ها با موفقیت بازیابی شد.',
+            HTTPResponse::HTTP_OK,
+           $vehicles,
+
+       );
     }
 
     /**
@@ -107,7 +109,7 @@ class VehicleController extends Controller
         $this->vehicleRepository->delete($id);
 
         return $this->getMessage(
-            'delete successully',
+            'delete successfully',
             HTTPResponse::HTTP_OK
         );
     }

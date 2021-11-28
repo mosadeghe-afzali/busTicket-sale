@@ -33,8 +33,9 @@ class ScheduleController extends Controller
         $schedules = $this->scheduleRepository->list();
 
         return $this->getMessage(
+            'لیست برنامه سفرهای ثبت شده با موفقیت بازیابی شد',
+            HTTPResponse::HTTP_OK,
             $schedules,
-            HTTPResponse::HTTP_OK
         );
     }
 
@@ -85,7 +86,7 @@ class ScheduleController extends Controller
     /* display list of vehicles in a specific date for a specific origin and destination */
     public function list(ScheduleListRequest $request)
     {
-        $this->checkRegisterScheduleDate->checkIsPast($request->date);
+//        $this->checkRegisterScheduleDate->checkIsPast($request->date);
 
         $data = [
             'date' => $request->date,
@@ -105,8 +106,9 @@ class ScheduleController extends Controller
             );
 
         return $this->getMessage(
+            'لیست برنامه سفر ها با موفقیت بازیابی شد.',
+            HTTPResponse::HTTP_OK,
             $schedules,
-            HTTPResponse::HTTP_OK
         );
 
     }

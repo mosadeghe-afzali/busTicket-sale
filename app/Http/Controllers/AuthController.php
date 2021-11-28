@@ -38,7 +38,8 @@ class AuthController extends Controller
 
         DB::beginTransaction();
 
-        $this->userRepository->store($data);
+       $user = $this->userRepository->store($data);
+        $token = $user->createToken('userToken')->accessToken;
         $this->roleRepository->store();
         $this->userRoleRepository->store($this->userRepository, $this->roleRepository);
 
@@ -46,7 +47,8 @@ class AuthController extends Controller
 
         return $this->getMessage(
             'کاربر با موفقیت ثبت شد',
-            HTTPResponse::HTTP_OK
+            HTTPResponse::HTTP_OK,
+            $token
         );
 
     }
@@ -58,11 +60,11 @@ class AuthController extends Controller
         if ($user) {
             if (Hash::check($request->password, $user->password)) {
                 $token = $user->createToken('userToken')->accessToken;
-                return response()->json([
-                    'token' => $token,
-                    'token_type' => 'bearer',
-                    'code' => 200
-                ]);
+                return $this->getMessage(
+                    'bearer',
+                    HTTPResponse::HTTP_OK,
+                    $token,
+                );
             } else {
                 return $this->getErrors(
                     'پسورد وارد شده اشتتباه است',
