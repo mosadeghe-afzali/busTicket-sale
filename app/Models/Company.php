@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Hekmatinasser\Verta\Verta;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Company extends Model
 {
@@ -22,9 +23,9 @@ class Company extends Model
     {
         return $this->hasOne(Comment::class);
     }
-
-
-
-
+    public function companyInfo()
+    {
+        $this->hasOne(CompanyInfo::class);
+    }
 
 }

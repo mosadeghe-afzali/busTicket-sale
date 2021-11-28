@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Hekmatinasser\Verta\Verta;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,12 +11,19 @@ class Schedule extends Model
 {
     use HasFactory;
 
-    protected $guarded = ['id'];
+    protected  $guarded = ['id'];
 
     public function vehicle()
     {
         return $this->belongsTo(Vehicle::class);
     }
+
+    public function getDateAttribute($value)
+    {
+        return $v = Verta::instance($value)->formatDate();
+    }
+
+
 
     public function scopeFilter($query, $filter, $order)
     {
@@ -32,10 +40,6 @@ class Schedule extends Model
 
     public function scopeScheduleSelection($query, $data)
     {
-//        return $query->where(DB::raw('DATE(date)'), $data['date'])->where('origin', $data['origin'])
-//            ->where('destination', $data['destination'])->select('date', 'origin', 'destination', 'price',
-//                'vehicles.capacity', 'vehicles.model', 'vehicles.description');
-
         return $query->where(DB::raw('DATE(date)'), $data['date'])
             ->when($data['origin'] ?? false,
                 fn($query) => $query->where('origin', $data['origin']))->
