@@ -11,7 +11,7 @@ trait Response
         ]);
     }
 
-    public function getMessage($message, $code, $response = null)
+    public function getMessage($message, $code = 200, $response = null)
     {
         return response()->json([
             'message' => $message,
