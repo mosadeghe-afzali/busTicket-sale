@@ -49,4 +49,9 @@ class Schedule extends Model
                 'vehicles.capacity', 'vehicles.model', 'vehicles.description');
     }
 
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
+
 }
