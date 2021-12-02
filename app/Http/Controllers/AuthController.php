@@ -32,13 +32,18 @@ class AuthController extends Controller
     /* register of a new user and set its role in database */
     public function store(UserRequest $request)
     {
-        $data = $request->all();
+        $data =
+            ['name' => $request->name,
+             'email' => $request->email,
+             'password' => $request->password,
+             'gender' => $request->gender,
+            ];
 
         $data['password'] = Hash::make($request->password);
 
         DB::beginTransaction();
 
-       $user = $this->userRepository->store($data);
+        $user = $this->userRepository->store($data);
         $token = $user->createToken('userToken')->accessToken;
         $this->roleRepository->store();
         $this->userRoleRepository->store($this->userRepository, $this->roleRepository);

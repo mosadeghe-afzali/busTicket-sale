@@ -187,7 +187,11 @@ return [
         "company_name" => "نام شرکت",
         "vehicle_id" => "کد وسیله نقلیه",
         'order' => 'فیلد مرتب سازی',
-        'filter' => 'فیلد'
+        'filter' => 'فیلد',
+        'reservations.*.name' => 'نام مسافر',
+        'reservations.*.gender' => 'جنسیت',
+        'reservations.*.national_code' => 'کدملی',
+        'reservations.*.seat_number' => 'شماره صندلی',
     ],
 
 ];

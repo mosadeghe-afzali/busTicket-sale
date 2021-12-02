@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\repositories\VehicleRepository;
 use App\Traits\Response;
 use App\repositories\ScheduleRepository;
 use App\Http\Requests\ScheduleListRequest;
@@ -14,12 +15,16 @@ class ScheduleController extends Controller
     use Response;
 
     public $scheduleRepository;
+    private $vehicleRepository;
     public $checkRegisterScheduleDate;
 
     /* injection of ScheduleRepository dependency to this class: */
-    public function __construct(ScheduleRepository $scheduleRepository, CheckRegisterScheduleDate $checkRegisterScheduleDate)
+    public function __construct(ScheduleRepository $scheduleRepository,
+                                VehicleRepository $vehicleRepository,
+                                CheckRegisterScheduleDate $checkRegisterScheduleDate)
     {
         $this->scheduleRepository = $scheduleRepository;
+        $this->vehicleRepository = $vehicleRepository;
         $this->checkRegisterScheduleDate = $checkRegisterScheduleDate;
     }
 
@@ -51,6 +56,7 @@ class ScheduleController extends Controller
         $this->checkRegisterScheduleDate->checkIsPast($request->date);
 
         $data = $request->all();
+        $data['remaining_capacity'] = $this->vehicleRepository->getcapacity($data['vehicle_id']);
         $data['registrar'] = auth('api')->id();
         $this->scheduleRepository->store($data);
 

@@ -4,11 +4,11 @@ namespace App\Http\Controllers;
 
 use Carbon\Carbon;
 use App\Traits\Response;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\repositories\VehicleRepository;
 use App\repositories\ScheduleRepository;
 use App\repositories\PassengerRepository;
+use App\Http\Requests\ReservationRequest;
 use App\repositories\ReservationRepository;
 use Illuminate\Http\Response as HTTPResponse;
 
@@ -16,10 +16,10 @@ class ReservationController extends Controller
 {
     use Response;
 
-    public $vehicleRepository;
-    public $scheduleRepository;
-    public $passengerRepository;
-    public $reservationRepository;
+    private $vehicleRepository;
+    private $scheduleRepository;
+    private $passengerRepository;
+    private $reservationRepository;
 
 
     /* injection of ScheduleRepository, VehicleRepository, PassengerRepository, ReservationRepository, dependencies
@@ -46,16 +46,15 @@ class ReservationController extends Controller
         $seats = [];
 
         for ($i = 1; $i <= $capacity; $i++) {
+            if (!in_array($i, $reserveSeats)) {
+                $seats[] = [$i => 'available'];
+                continue;
+            }
             $passengerId = $this->reservationRepository->getPassengerId($i, $id);
             $gender = ($this->passengerRepository->getGender($passengerId) == 'f') ? ' خانم' : ' آقا';
-
-            if (!in_array($i, $reserveSeats)) {
-
-                $seats[] = [$i => 'available'];
-            } else {
-                $seats[] = [$i => 'reserve', 'جنسیت' => $gender];
-            }
+            $seats[] = [$i => 'reserve', 'جنسیت' => $gender];
         }
+
         return $this->getMessage(
             'لیست صندلی ها با موفقیت بازیابی شد.',
             HTTPResponse::HTTP_OK,
@@ -65,7 +64,7 @@ class ReservationController extends Controller
     }
 
     /* reserve requested seats of users and print a bilم */
-    public function doReserve(Request $request, $id)
+    public function doReserve(ReservationRequest $request, $id)
     {
         $data = $request->json('reservations');
 
@@ -88,6 +87,7 @@ class ReservationController extends Controller
                 'user_id' => auth('api')->id(),
                 'passenger_id' => $passenger->id,
             ]);
+            $this->scheduleRepository->decrementRemainingCapacity($id);
         }
 
         $numberOfSeats = count($data);

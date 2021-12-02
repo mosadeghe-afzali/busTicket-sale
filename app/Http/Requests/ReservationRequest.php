@@ -30,12 +30,11 @@ class ReservationRequest extends FormRequest
     public function rules()
     {
                 return [
-                    'name' => 'required|string',
-                    'national_code' => 'required|numeric|digits:10|unique:passengers',
-                    'gender' => 'required|string',
-                    'seat_number' => 'required|numeric'
+                    'reservations.*.name' => 'required|string',
+                    'reservations.*.national_code' => 'required|numeric|digits:10',
+                    'reservations.*.gender' => 'required|string',
+                    'reservations.*.seat_number' => 'required|numeric'
                 ];
-
 
     }
 
