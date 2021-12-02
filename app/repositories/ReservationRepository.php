@@ -3,14 +3,14 @@
 namespace App\repositories;
 
 use App\Models\Reservation;
+use Carbon\Carbon;
 
 class ReservationRepository
 {
     /* fetch reserved seats of specific schedule */
     public function reservedSeats($id)
     {
-        $reservedSeats = Reservation::query()->where('schedule_id', $id)
-            ->select('seat_number')->pluck('seat_number')->toArray();
+        $reservedSeats = Reservation::query()->where('schedule_id', $id)->pluck('seat_number')->toArray();
 
         return $reservedSeats;
     }
@@ -31,5 +31,16 @@ class ReservationRepository
 
         return $reservation;
     }
+
+    /* cancellation of pending reserves after 15 minutes */
+    public function cancelReserve()
+    {
+        $reserves = Reservation::query()->where('status', 'pending')
+            ->where('reserve_date', '<' , Carbon::now()->subMinutes(15))->get();
+
+        return $reserves;
+    }
+
+
 
 }

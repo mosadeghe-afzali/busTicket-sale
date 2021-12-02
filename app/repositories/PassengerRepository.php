@@ -17,12 +17,18 @@ class PassengerRepository
     /* store a new passenger in database */
     public function store($data)
     {
-        $passenger = Passenger::query()->firstOrCreate(
+        $passenger = Passenger::firstOrCreate(
             ['national_code' => $data['national_code']],
             ['name' => $data['name'], 'gender' => $data['gender']]
         );
 
         return $passenger;
+    }
+
+    /* delete a passenger*/
+    public function delete($id)
+    {
+        return Passenger::query()->findOrFail($id)->delete();
     }
 
 }

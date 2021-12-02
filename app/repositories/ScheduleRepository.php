@@ -66,5 +66,14 @@ class ScheduleRepository
         return $price;
     }
 
+    public function decrementRemainingCapacity($id)
+    {
+        $capacity = Schedule::query()->find($id)->decrement('remaining_capacity');
+    }
+
+    public function incrementRemainingCapacity($id)
+    {
+        $capacity = Schedule::query()->find($id)->increment('remaining_capacity');
+    }
 
 }

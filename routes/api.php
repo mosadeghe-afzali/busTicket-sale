@@ -43,5 +43,4 @@ Route::post('/list', 'ScheduleController@list');
 Route::get('/info', 'CompanyController@info');
 
 Route::get('/reserve/{id}', 'ReservationController@availableSeats');
-
 Route::post('/reservation/{id}', 'ReservationController@doReserve' )->middleware('auth:api');

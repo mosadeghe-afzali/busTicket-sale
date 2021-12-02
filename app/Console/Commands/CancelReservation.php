@@ -3,12 +3,17 @@
 namespace App\Console\Commands;
 
 use App\Models\Passenger;
-use App\Models\Reservation;
-use Carbon\Carbon;
+use App\repositories\PassengerRepository;
 use Illuminate\Console\Command;
+use App\repositories\ScheduleRepository;
+use App\repositories\ReservationRepository;
 
 class CancelReservation extends Command
 {
+
+    private $reservationRepository;
+    private $scheduleRepository;
+    private $passengerRepository;
     /**
      * The name and signature of the console command.
      *
@@ -28,8 +33,14 @@ class CancelReservation extends Command
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(ReservationRepository $reservationRepository,
+                                ScheduleRepository $scheduleRepository,
+                                PassengerRepository $passengerRepository)
+
     {
+        $this->reservationRepository = $reservationRepository;
+        $this->scheduleRepository = $scheduleRepository;
+        $this->passengerRepository = $passengerRepository;
         parent::__construct();
     }
 
@@ -40,15 +51,16 @@ class CancelReservation extends Command
      */
     public function handle()
     {
-        $reserves = Reservation::query()->where('status', 'pending')
-            ->where('reserve_date', '<' , Carbon::now()->subMinutes(15))->get();
+        $reserves = $this->reservationRepository->cancelReserve();
 
         foreach($reserves as $reserve){
             $reserve->status = 'canceled';
             $reserve->save();
-//            $passenger_id = $reserve->passenger_id;
+            $passenger_id = $reserve->passenger_id;
+            $schedule_id = $reserve->schedule_id;
             $reserve->delete();
-//            Passenger::query()->findOrFail($passenger_id)->delete();
+            $this->scheduleRepository->incrementRemainingCapacity($schedule_id);
+            $this->passengerRepository->delete($passenger_id);
         }
         return 0;
     }
