@@ -27,7 +27,7 @@ class ReservationRepository
     /* store a new reserve request in database */
     public function store($data)
     {
-        $reservation = Reservation::query()->insert($data);
+        $reservation = Reservation::query()->create($data);
 
         return $reservation;
     }
@@ -36,11 +36,27 @@ class ReservationRepository
     public function cancelReserve()
     {
         $reserves = Reservation::query()->where('status', 'pending')
-            ->where('reserve_date', '<' , Carbon::now()->subMinutes(15))->get();
+            ->where('reserve_date', '<', Carbon::now()->subMinutes(15))->get();
 
         return $reserves;
     }
 
+    /* update payment status of a reservation in database */
+    public function update($data, $userId, $date)
+    {
+        return Reservation::query()->where('user_id', $userId)->where('created_at' , $date)->update($data);
+    }
 
+    /* show ticket of a specific reservation ofter successful payment */
+    public function ticket($paymentId)
+    {
+        $passenger_select = ['id', 'name', 'national_code'];
+        $schedule_select = ['id', 'date', 'end_date', 'origin', 'destination', 'price', 'vehicle_id'];
 
+        $ticket = Reservation::query()->where('payment_id', $paymentId)->
+            select('id', 'schedule_id', 'passenger_id', 'seat_number')
+            ->CheckSchedule($schedule_select)->CheckPassenger($passenger_select)->get()->toArray();
+
+        return $ticket;
+    }
 }
