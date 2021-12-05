@@ -17,7 +17,7 @@ class PassengerRepository
     /* store a new passenger in database */
     public function store($data)
     {
-        $passenger = Passenger::firstOrCreate(
+        $passenger = Passenger::query()->firstOrCreate(
             ['national_code' => $data['national_code']],
             ['name' => $data['name'], 'gender' => $data['gender']]
         );
