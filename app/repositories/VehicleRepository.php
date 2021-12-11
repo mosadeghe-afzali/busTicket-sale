@@ -25,7 +25,7 @@ class VehicleRepository
    /* query for delete a vehicle */
     public function delete($id)
     {
-        $vehicle = Vehicle::find($id);
+        $vehicle = Vehicle::findOrFail($id);
         $vehicle->delete();
 
         return $vehicle;

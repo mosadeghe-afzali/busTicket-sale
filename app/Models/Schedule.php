@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Hekmatinasser\Verta\Verta;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\Model;
@@ -20,10 +21,25 @@ class Schedule extends Model
 
     public function getDateAttribute($value)
     {
-        return $v = Verta::instance($value)->formatDate();
+        return $v = Verta::instance($value)->formatDatetime();
     }
 
+    public function getEndDateAttribute($value)
+    {
+        return $v = Verta::instance($value)->formatDatetime();
+    }
 
+    public function setDateAttribute($value)
+    {
+        $v = Verta::parse($value);
+         $this->attributes['date'] = Carbon::instance($v->datetime())->format('Y-m-d H:i:s');
+    }
+
+    public function setEndDateAttribute($value)
+    {
+        $v = Verta::parse($value);
+         $this->attributes['end_date'] = Carbon::instance($v->datetime())->format('Y-m-d H:i:s');
+    }
 
     public function scopeFilter($query, $filter, $order)
     {
@@ -46,7 +62,7 @@ class Schedule extends Model
             when($data['destination'] ?? false,
                 fn($query) => $query->where('destination', $data['destination']))->
             select('date', 'end_date', 'origin', 'destination', 'price',
-                'vehicles.capacity', 'vehicles.model', 'vehicles.description');
+                'remaining_capacity', 'vehicles.model', 'vehicles.description');
     }
 
     public function reservations()

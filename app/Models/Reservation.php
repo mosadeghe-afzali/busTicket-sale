@@ -3,9 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Notifications\Notifiable;
 
 class Reservation extends Model
 {
@@ -31,8 +31,12 @@ class Reservation extends Model
 
     public function scopeCheckSchedule($query, $select)
     {
-        $vehicle_callback = function ($query) use ($select) {
-            $query->select('model', 'id');
+        $company_callback = function ($query){
+            $query->select('id', 'name');
+        };
+
+        $vehicle_callback = function ($query) use ($company_callback) {
+            $query->select('model', 'id', 'company_id')->with(['company' => $company_callback]);
         };
 
         $schedule_callback = function ($query) use ($select, $vehicle_callback) {

@@ -31,7 +31,6 @@ class CompanyController extends Controller
             HTTPResponse::HTTP_OK,
             $companies,
         );
-
     }
 
     /* display comments of companies about site*/
@@ -49,7 +48,7 @@ class CompanyController extends Controller
 
     public function info()
     {
-        $info = $this->companyRepository->indo();
+        $info = $this->companyRepository->info();
 
         return $this->getMessage(
             'اطلاعات شرکت با موفقیت بازبابی شد.',
@@ -57,6 +56,4 @@ class CompanyController extends Controller
             $info,
         );
     }
-
-
 }

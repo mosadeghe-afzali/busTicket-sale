@@ -42,14 +42,17 @@ Route::group(['prefix' => '/companies'], function() {
     Route::get('/info', 'CompanyController@info');
 });
 
-Route::group(['prefix' => '/reservation', 'middleware' => 'auth:api'], function() {
+Route::group(['prefix' => '/reservation'], function() {
     Route::get('/show/{id}', 'ReservationController@availableSeats')->withoutMiddleware('auth:api');
     Route::post('/{id}', 'ReservationController@doReserve')->middleware('auth:api');
-    Route::get('/ticket/{id}', 'ReservationController@ticket')->middleware('auth:api');
-    Route::get('/pdfTicket/{id}', 'ReservationController@getPdfTicket');
 });
 
 Route::group(['prefix' => '/pay', 'middleware' => 'auth:api'], function() {
     Route::post('/{id}', 'PaymentController@payRequest');
-    Route::get('/result/{id}', 'PaymentController@pay');
+    Route::get('/result/{id}', 'PaymentController@pay')->withoutMiddleware('auth:api');
+});
+
+Route::group(['prefix' => '/ticket', 'middleware' => 'auth:api'], function(){
+    Route::get('/{id}', 'TicketController@ticket');
+    Route::get('/pdfTicket/{id}', 'TicketController@getPdfTicket');
 });

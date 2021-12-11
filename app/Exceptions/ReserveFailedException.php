@@ -12,7 +12,7 @@ class ReserveFailedException extends Exception
     {
         return response()->json([
             $this->getMessage(),
-            200
+            HTTPResponse::HTTP_REQUESTED_RANGE_NOT_SATISFIABLE
         ]);
     }
 

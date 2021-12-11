@@ -22,7 +22,6 @@ class PaymentValidation
             throw new Exception("توضیحات تراکنش ( Description ) نباید خالی باشد") ;
         }
 
-
         $error = array(
             "-1" 	=> "اطلاعات ارسال شده ناقص است.",
             "-2" 	=> "IP و يا مرچنت كد پذيرنده صحيح نيست",

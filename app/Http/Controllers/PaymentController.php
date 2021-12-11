@@ -17,7 +17,9 @@ class PaymentController extends Controller
     public $reservatonRepository;
 
     /* injection of PaymentRepository, Zarinpal and ReservationRepository dependencies to this class: */
-    public function __construct(Zarinpal $zarinpal, PaymentRepository $paymentRepository, ReservationRepository $reservationRepository)
+    public function __construct(Zarinpal $zarinpal,
+                                PaymentRepository $paymentRepository,
+                                ReservationRepository $reservationRepository)
     {
         $this->zarinpal = $zarinpal;
         $this->paymentRepository = $paymentRepository;
@@ -28,12 +30,11 @@ class PaymentController extends Controller
     public function payRequest($id)
     {
         $user = auth('api')->user();
-        $email = $user->email;
 
         $info = [
             'amount' => $this->paymentRepository->getAmount($id),
             'description' => $this->paymentRepository->getDescription($id),
-            'email' => $email,
+            'email' => $user->email,
             'callbackUrl' => 'http://127.0.0.1:8000/api/pay/result/' . $id
         ];
 
@@ -83,5 +84,4 @@ class PaymentController extends Controller
                 $result["Status"]);
         }
     }
-
 }

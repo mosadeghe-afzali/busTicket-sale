@@ -28,7 +28,8 @@ class ScheduleRepository
     /* fetch all dates match to request date for register a new schedule */
     public function reserveDates($vehicleId)
     {
-        $reserved = Schedule::where('vehicle_id', $vehicleId)->select(DB::raw('DATE(date) as date'))->pluck('date')->toArray();
+        $reserved = Schedule::where('vehicle_id', $vehicleId)->select('date','end_date')
+            ->get()->toArray();
 
         return $reserved;
     }

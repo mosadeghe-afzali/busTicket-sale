@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\repositories\VehicleRepository;
+use Carbon\Carbon;
 use App\Traits\Response;
+use Hekmatinasser\Verta\Verta;
+use App\repositories\VehicleRepository;
 use App\repositories\ScheduleRepository;
 use App\Http\Requests\ScheduleListRequest;
 use App\Http\Requests\ScheduleStoreRequest;
@@ -28,11 +30,8 @@ class ScheduleController extends Controller
         $this->checkRegisterScheduleDate = $checkRegisterScheduleDate;
     }
 
-    /**
-     * Display a listing of the schedules.
-     *
-      @return \Illuminate\Http\Response
-     */
+
+     /* Display a listing of the schedules. */
     public function index()
     {
         $schedules = $this->scheduleRepository->list();
@@ -44,15 +43,13 @@ class ScheduleController extends Controller
         );
     }
 
-    /**
-     * Store a newly created schedule in database.
-     *
-     * @param \Illuminate\Http\Request $request
-      @return \Illuminate\Http\Response
-     */
+    /* Store a newly created schedule in database. */
     public function store(ScheduleStoreRequest $request)
     {
-        $this->checkRegisterScheduleDate->checkFailedDates($request->date, $this->scheduleRepository->reserveDates($request->vehicle_id));
+        $this->checkRegisterScheduleDate->checkFailedDates($request->date,
+                                                           $request->end_date,
+                                                           $this->scheduleRepository->reserveDates($request->vehicle_id)
+                                                           );
         $this->checkRegisterScheduleDate->checkIsPast($request->date);
 
         $data = $request->all();
@@ -64,19 +61,13 @@ class ScheduleController extends Controller
             'برنامه مورد نظر با موفقیت ثبت شد',
             HTTPResponse::HTTP_OK
         );
-
     }
 
-    /**
-     * Update the specified schedule in database.
-     *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-      @return \Illuminate\Http\Response
-     */
+     /* Update the specified schedule in database. */
     public function update(ScheduleStoreRequest $request, $id)
     {
-//        $this->checkRegisterScheduleDate->checkFailedDates($request->date, $this->scheduleRepository->reserveDates($request->vehicle_id));
+//        $this->checkRegisterScheduleDate->checkFailedDates($request->date,$request->end_date,
+//            $this->scheduleRepository->reserveDates($request->vehicle_id));
         $this->checkRegisterScheduleDate->checkIsPast($request->date);
 
         $data = $request->all();
@@ -95,8 +86,7 @@ class ScheduleController extends Controller
 //        $this->checkRegisterScheduleDate->checkIsPast($request->date);
 
         $data = [
-            'date' => $request->date,
-            'end_date' => $request->end_date,
+            'date' => Carbon::instance(Verta::parse($request->date)->datetime())->format('Y-m-d'),
             'origin' => $request->origin,
             'destination' => $request->destination,
             'filter' => $request->filter,

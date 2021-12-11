@@ -37,7 +37,7 @@ class ScheduleListRequest extends FormRequest
             'destination' => 'nullable|string|max:20',
             'filter' => ['nullable',
                 Rule::in(
-                    ["date", "price", "vehicles.capacity", "vehicles.model"]
+                    ["date", "price", "remaining_capacity", "vehicles.model"]
                 )],
             'order' => ['nullable',
                 Rule::in(['asc', 'desc'])

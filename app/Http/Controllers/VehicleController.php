@@ -6,7 +6,6 @@ use App\Traits\Response;
 use App\repositories\VehicleRepository;
 use App\repositories\CompanyRepository;
 use App\Http\Requests\VehicleStoreRequest;
-use App\Http\Requests\VehicleUpdateRequest;
 use Illuminate\Http\Response as HTTPResponse;
 
 class VehicleController extends Controller
@@ -36,7 +35,6 @@ class VehicleController extends Controller
            'لیست اتوبوس ها با موفقیت بازیابی شد.',
             HTTPResponse::HTTP_OK,
            $vehicles,
-
        );
     }
 
@@ -59,7 +57,7 @@ class VehicleController extends Controller
             'registrar' => auth('api')->id(),
         ];
 
-        $vehicle = $this->vehicleRepository->store($data);
+        $this->vehicleRepository->store($data);
 
         return $this->getMessage(
             'وسیله نقلیه مورد نظر با موفقیت ثبت شد',
@@ -67,21 +65,11 @@ class VehicleController extends Controller
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified Vehicle in database.
      *
      * @param \Illuminate\Http\Request $request
      * @param int $id
+     *
       @return \Illuminate\Http\Response
      */
     public function update(VehicleStoreRequest $request, $id)
@@ -100,8 +88,6 @@ class VehicleController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param int $id
       @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -109,7 +95,7 @@ class VehicleController extends Controller
         $this->vehicleRepository->delete($id);
 
         return $this->getMessage(
-            'delete successfully',
+            'وسیله نقلیه مورد نظر با موفقیت حدف شد',
             HTTPResponse::HTTP_OK
         );
     }

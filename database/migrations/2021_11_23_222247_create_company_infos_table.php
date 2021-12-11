@@ -16,7 +16,6 @@ class CreateCompanyInfosTable extends Migration
         Schema::create('company_infos', function (Blueprint $table) {
             $table->id();
             $table->text('about_us');
-            $table->date('registration_date');
             $table->bigInteger('company_id')->unsigned()->index();
             $table->foreign('company_id')->references('id')->on('companies');
             $table->timestamps();

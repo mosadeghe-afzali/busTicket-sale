@@ -22,7 +22,9 @@ class AuthController extends Controller
     public $userRoleRepository;
 
     /* injection of UserRepository, RoleRepository and RoleUserRepository dependencies to this class: */
-    public function __construct(UserRepository $userRepository, RoleRepository $roleRepository, UserRoleRepository $userRoleRepository)
+    public function __construct(UserRepository $userRepository,
+                                RoleRepository $roleRepository,
+                                UserRoleRepository $userRoleRepository)
     {
         $this->userRepository = $userRepository;
         $this->roleRepository = $roleRepository;
@@ -55,7 +57,6 @@ class AuthController extends Controller
             HTTPResponse::HTTP_OK,
             $token
         );
-
     }
 
     /* login users in site */
@@ -66,7 +67,7 @@ class AuthController extends Controller
             if (Hash::check($request->password, $user->password)) {
                 $token = $user->createToken('userToken')->accessToken;
                 return $this->getMessage(
-                    'bearer',
+                    'خوش آمدید',
                     HTTPResponse::HTTP_OK,
                     $token,
                 );
@@ -90,9 +91,7 @@ class AuthController extends Controller
         return $this->getErrors(
             'You have been successfully logged out!',
             HTTPResponse::HTTP_OK);
-
     }
-
 }
 
 

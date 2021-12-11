@@ -28,4 +28,8 @@ class Company extends Model
         $this->hasOne(CompanyInfo::class);
     }
 
+    public function getRegistrationDateAttribute($value)
+    {
+        return $v = Verta::instance($value)->formatDate();
+    }
 }
