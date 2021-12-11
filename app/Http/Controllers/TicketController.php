@@ -31,6 +31,7 @@ class TicketController extends Controller
 
         foreach ($ticketData as $data) {
             $tickets[] = [
+                'company' => $data['schedule']['vehicle']['company']['name'],
                 'seat_number' => $data['seat_number'],
                 'price' => $data['schedule']['price'],
                 'origin' => $data['schedule']['origin'],
