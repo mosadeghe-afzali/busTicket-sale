@@ -2,10 +2,12 @@
 
 namespace App\Http\Middleware;
 
+use Illuminate\Http\Response as HTTPResponse;
 use Illuminate\Auth\Middleware\Authenticate as Middleware;
 
 class Authenticate extends Middleware
 {
+
     /**
      * Get the path the user should be redirected to when they are not authenticated.
      *
@@ -14,8 +16,7 @@ class Authenticate extends Middleware
      */
     protected function redirectTo($request)
     {
-        if (! $request->expectsJson()) {
-            return route('login');
-        }
+            response()->json('Unauthorized', 403);
+
     }
 }
