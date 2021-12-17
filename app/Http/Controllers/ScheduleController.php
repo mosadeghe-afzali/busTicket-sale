@@ -20,7 +20,13 @@ class ScheduleController extends Controller
     private $vehicleRepository;
     public $checkRegisterScheduleDate;
 
-    /* injection of ScheduleRepository dependency to this class: */
+    /**
+     * injection of ScheduleRepository dependency to this class:
+     *
+     * @param ScheduleRepository $scheduleRepository
+     * @param VehicleRepository $vehicleRepository
+     * @param CheckRegisterScheduleDate $checkRegisterScheduleDate
+     */
     public function __construct(ScheduleRepository $scheduleRepository,
                                 VehicleRepository $vehicleRepository,
                                 CheckRegisterScheduleDate $checkRegisterScheduleDate)
@@ -31,7 +37,11 @@ class ScheduleController extends Controller
     }
 
 
-     /* Display a listing of the schedules. */
+    /**
+     * Display a listing of the schedules.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function index()
     {
         $schedules = $this->scheduleRepository->list();
@@ -43,7 +53,13 @@ class ScheduleController extends Controller
         );
     }
 
-    /* Store a newly created schedule in database. */
+    /**
+     * Store a newly created schedule in database.
+     *
+     * @param ScheduleStoreRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \App\Exceptions\ReserveFailedException
+     */
     public function store(ScheduleStoreRequest $request)
     {
         $this->checkRegisterScheduleDate->checkFailedDates($request->date,
@@ -63,7 +79,14 @@ class ScheduleController extends Controller
         );
     }
 
-     /* Update the specified schedule in database. */
+    /**
+     * Update the specified schedule in database.
+     *
+     * @param ScheduleStoreRequest $request
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse|void
+     * @throws \App\Exceptions\ReserveFailedException
+     */
     public function update(ScheduleStoreRequest $request, $id)
     {
 //        $this->checkRegisterScheduleDate->checkFailedDates($request->date,$request->end_date,
@@ -80,7 +103,12 @@ class ScheduleController extends Controller
         );
     }
 
-    /* display list of vehicles in a specific date for a specific origin and destination */
+    /**
+     * display list of vehicles in a specific date for a specific origin and destination
+     *
+     * @param ScheduleListRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function list(ScheduleListRequest $request)
     {
 //        $this->checkRegisterScheduleDate->checkIsPast($request->date);
@@ -108,5 +136,4 @@ class ScheduleController extends Controller
         );
 
     }
-
 }

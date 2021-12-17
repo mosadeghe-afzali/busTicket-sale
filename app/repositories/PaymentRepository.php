@@ -1,67 +1,94 @@
 <?php
 
-
 namespace App\repositories;
 
-
-use App\Models\Payment;
 use App\Models\User;
+use App\Models\Payment;
 
 class PaymentRepository
 {
-    /* store a new payment request in database */
-    public function store($data)
+    /**
+     * store a new payment request in database.
+     *
+     * @param array $data
+     */
+    public function store(array $data)
     {
-        $pay = Payment::query()->create($data);
-
-        return $pay;
+        Payment::query()->create($data);
     }
 
-    /* fetch amount of a payment request form database */
-    public function getAmount($id)
+    /**
+     * fetch amount of a payment request form database
+     *
+     * @param int $id
+     * @return mixed
+     */
+    public function getAmount(int $id)
     {
         $data = Payment::query()->where('id', $id)->value('amount');
 
         return $data;
     }
 
-    /* fetch description of a payment request form database */
-    public function getDescription($id)
+    /**
+     * fetch description of a payment request form database.
+     *
+     * @param int $id
+     * @return mixed
+     */
+    public function getDescription(int $id)
     {
         $description = Payment::query()->where('id', $id)->value('description');
 
         return $description;
     }
 
-    /* update status and add refId of payment in database */
-    public function update($data, $id)
+    /**
+     * update status and add refId of payment in database.
+     *
+     * @param array $data
+     * @param int $id
+     */
+    public function update(array $data, int $id)
     {
-        $pay = Payment::query()->findOrFail($id)->update($data);
-
-        return $pay;
+        Payment::query()->findOrFail($id)->update($data);
     }
 
-    /* get authority of a payment request form database */
-    public function getAuthority($id)
+    /**
+     * get authority of a payment request form database.
+     *
+     * @param int $id
+     * @return int $authority
+     */
+    public function getAuthority(int $id)
     {
-        $au = Payment::query()->where('id', $id)->value('authority');
+        $authority = Payment::query()->where('id', $id)->value('authority');
 
-        return $au;
+        return $authority;
     }
 
-    /* fetch user who paid a specific reserve */
-    public function getUser($id)
+    /**
+     * fetch user who paid a specific reserve.
+     *
+     * @param int $id
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function getUser(int $id)
     {
         $userId = Payment::query()->where('id', $id)->value('user_id');
-        $user = User::query()->find($userId);
+        $user = User::query()->findOrFail($userId);
 
         return$user;
     }
 
-    /* get creation date of a specific payment */
+    /**
+     * get creation date of a specific payment.
+     *
+     * @param int $id
+     * @return string
+     */
     public function getCreatedDate($id)
     {
         return Payment::query()->where('id', $id)->value('created_at')->format('Y-m-d H:i:s');
     }
-
 }

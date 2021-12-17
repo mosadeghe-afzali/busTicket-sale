@@ -6,7 +6,12 @@ use App\Models\User;
 
 class UserRoleRepository
 {
-    // query for filling pivot table of role_user in database
+    /**
+     * query for filling pivot table of role_user in database.
+     *
+     * @param $user
+     * @param $role
+     */
     public function store($user, $role)
     {
         $userId = $user->lastUserId();
@@ -16,5 +21,4 @@ class UserRoleRepository
         $userRole->roles()->attach($roleId);
 
     }
-
 }

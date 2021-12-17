@@ -23,8 +23,15 @@ class ReservationController extends Controller
     private $passengerRepository;
     private $reservationRepository;
 
-    /* injection of ScheduleRepository, VehicleRepository, PassengerRepository, ReservationRepository, dependencies
-      * to this class: */
+    /**
+     * create a new reservation instance
+     *
+     * @param VehicleRepository $vehicleRepository
+     * @param PaymentRepository $paymentRepository
+     * @param ScheduleRepository $scheduleRepository
+     * @param PassengerRepository $passengerRepository
+     * @param ReservationRepository $reservationRepository
+     */
     public function __construct(VehicleRepository $vehicleRepository,
                                 PaymentRepository $paymentRepository,
                                 ScheduleRepository $scheduleRepository,
@@ -39,7 +46,12 @@ class ReservationController extends Controller
         $this->reservationRepository = $reservationRepository;
     }
 
-    /* display available and reserved seats of a specific schedule*/
+    /**
+     * display available and reserved seats of a specific schedule
+     *
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function availableSeats($id)
     {
         $vehicleId = $this->scheduleRepository->getVehicleId($id);
@@ -65,7 +77,12 @@ class ReservationController extends Controller
         );
     }
 
-    /* reserve requested seats of users and print a bilم */
+    /**
+     * reserve requested seats of users and print a bil
+     *
+     * @param \App\Http\Requests\ReservationRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function doReserve(ReservationRequest $request, $id)
     {
         $data = $request->json('reservations');
@@ -83,7 +100,7 @@ class ReservationController extends Controller
                 'gender' => $item['gender']
             ]);
 
-            $reservation = $this->reservationRepository->store([
+             $this->reservationRepository->store([
                 'seat_number' => $item['seat_number'],
                 'reserve_date' => Carbon::now(),
                 'schedule_id' => $id,
@@ -96,7 +113,7 @@ class ReservationController extends Controller
         $numberOfSeats = count($data);
         $price = $this->scheduleRepository->getPrice($id) * $numberOfSeats;
 
-        $pay = $this->paymentRepository->store([
+        $this->paymentRepository->store([
             'amount' => $price,
             'description' => 'تعداد صندلی رزرو شده:' . $numberOfSeats,
             'user_id' => auth('api')->id(),
@@ -115,5 +132,4 @@ class ReservationController extends Controller
             $bill,
         );
     }
-
 }

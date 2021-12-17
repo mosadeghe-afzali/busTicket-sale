@@ -14,14 +14,23 @@ class CompanyController extends Controller
     public $companyRepository;
     public $commentRepository;
 
-    /* injection of CompanyRepository and CommentRepository dependencies to this class: */
+    /**
+     * injection of CompanyRepository and CommentRepository dependencies to this class
+     *
+     * @param  CompanyRepository $companyRepository
+     * @param CommentRepository $commentRepository
+     */
     public function __construct(CompanyRepository $companyRepository, CommentRepository $commentRepository)
     {
         $this->companyRepository = $companyRepository;
         $this->commentRepository = $commentRepository;
     }
 
-    /* display list of companies in database*/
+    /**
+     * display list of companies in database
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function list()
     {
         $companies = $this->companyRepository->list();
@@ -33,7 +42,11 @@ class CompanyController extends Controller
         );
     }
 
-    /* display comments of companies about site*/
+    /**
+     * display comments of companies about site
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getComments()
     {
         $comments = $this->commentRepository->getComment();
@@ -42,10 +55,14 @@ class CompanyController extends Controller
             'لیست کامنت ها با موفقیت بازبابی شد.',
             HTTPResponse::HTTP_OK,
             $comments,
-
         );
     }
 
+    /**
+     * show this company info.
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function info()
     {
         $info = $this->companyRepository->info();

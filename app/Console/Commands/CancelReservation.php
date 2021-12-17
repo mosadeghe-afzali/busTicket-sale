@@ -2,10 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Models\Passenger;
-use App\repositories\PassengerRepository;
 use Illuminate\Console\Command;
 use App\repositories\ScheduleRepository;
+use App\repositories\PassengerRepository;
 use App\repositories\ReservationRepository;
 
 class CancelReservation extends Command

@@ -37,7 +37,11 @@ class VehicleStoreRequest extends FormRequest
         ];
     }
 
-    /* overriding the failedValidation method for return json validation response in api */
+    /**
+     * get validation in json format.
+     *
+     * @param Validator $validator
+     */
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException($this->getErrors(

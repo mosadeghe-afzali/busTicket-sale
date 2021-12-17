@@ -1,28 +1,36 @@
 <?php
 namespace App\repositories;
 
-use App\Models\Role;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
 
 class UserRepository
 {
-    /* query for insert a user in database */
+    /**
+     * query for insert a user in database.
+     *
+     * @param array $data
+     */
     public function store($data)
     {
-        $user = User::create($data);
-        $userId = $user->id;
-
-        return $user;
+       return User::create($data);
     }
 
-    /* finding last user inserted in database: */
+    /**
+     * finding last user inserted in database.
+     *
+     * @return mixed
+     */
     public function lastUserId()
     {
         return User::query()->latest('id')->value('id');
     }
 
-    /* finding user with requested email in database: */
+    /**
+     * finding user with requested email in database.
+     *
+     * @param string $email
+     * @return
+     */
     public function checkUser($email)
     {
         $user = User::where('email', $email)->first();

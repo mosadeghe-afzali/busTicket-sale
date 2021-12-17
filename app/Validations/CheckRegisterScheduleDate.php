@@ -6,7 +6,6 @@ namespace App\Validations;
 use App\Traits\Response;
 use Hekmatinasser\Verta\Verta;
 use App\Exceptions\ReserveFailedException;
-use Illuminate\Http\Response as HTTPResponse;
 
 class CheckRegisterScheduleDate
 {

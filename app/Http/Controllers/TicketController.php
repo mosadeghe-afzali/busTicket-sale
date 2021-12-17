@@ -18,13 +18,24 @@ class TicketController extends Controller
    private $reservationRepository;
    private $paymentRepository;
 
+    /**
+     * TicketController constructor.
+     *
+     * @param ReservationRepository $reservationRepository
+     * @param PaymentRepository $paymentRepository
+     */
    public function __construct(ReservationRepository $reservationRepository, PaymentRepository $paymentRepository)
    {
        $this->reservationRepository = $reservationRepository;
        $this->paymentRepository = $paymentRepository;
    }
 
-    /* display tickets of user after payment: */
+    /**
+     * display tickets of user after payment:
+     *
+     * @param int $paymentId
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function ticket($paymentId)
     {
         $ticketData = $this->reservationRepository->ticket($paymentId);
@@ -53,7 +64,12 @@ class TicketController extends Controller
         );
     }
 
-    /* creat pdf format of ticket and show */
+    /**
+     * creat pdf format of ticket and show
+     *
+     * @param int $paymentId
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function getPdfTicket($paymentId)
     {
         $data = json_decode($this->ticket($paymentId)->getContent(), true);

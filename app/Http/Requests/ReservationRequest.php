@@ -38,6 +38,11 @@ class ReservationRequest extends FormRequest
 
     }
 
+    /**
+     * get validation in json format.
+     *
+     * @param Validator $validator
+     */
     protected function failedValidation(Validator $validator)
     {
         throw new HttpResponseException($this->getErrors(

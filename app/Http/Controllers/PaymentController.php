@@ -26,7 +26,12 @@ class PaymentController extends Controller
         $this->reservatonRepository = $reservationRepository;
     }
 
-    /* send payment request to gateway */
+    /**
+     * send payment request to gateway
+     *
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function payRequest($id)
     {
         $user = auth('api')->user();
@@ -53,7 +58,12 @@ class PaymentController extends Controller
 
     }
 
-    /* Get the payment result from the payment gateway and display the payment status to the user */
+    /**
+     * Get the payment result from the payment gateway and display the payment status to the user
+     *
+     * @param int $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function pay($id)
     {
         $info = [

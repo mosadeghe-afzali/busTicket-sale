@@ -2,8 +2,8 @@
 
 namespace App\Http\Middleware;
 
-use App\Traits\Response;
 use Closure;
+use App\Traits\Response;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response as HTTPResponse;
 

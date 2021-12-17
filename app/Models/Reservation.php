@@ -13,22 +13,47 @@ class Reservation extends Model
     use HasFactory;
     use SoftDeletes;
 
+    /**
+     * The attributes that are not mass assignable.
+     *
+     * @var string[]
+     */
     protected $guarded = ['id'];
 
+    /**
+     * get passenger of a reservation.
+     *
+     */
     public function passenger()
     {
         return $this->belongsTo(Passenger::class);
     }
+
+    /**
+     * get schedule associated to a reservation.
+     *
+     */
     public function schedule()
     {
         return $this->belongsTo(Schedule::class);
     }
 
+    /**
+     * get user who done a reservation.
+     *
+     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * scope a query to ger schedule data of a reservation.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $select
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     public function scopeCheckSchedule($query, $select)
     {
         $company_callback = function ($query){
@@ -46,6 +71,13 @@ class Reservation extends Model
         return $query->with(['schedule' => $schedule_callback]);
     }
 
+    /**
+     * scope a query to get passenger data of a reservation.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param $select
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
     public function scopeCheckPassenger($query, $select)
     {
         $passenger_callback = function ($query) use ($select) {

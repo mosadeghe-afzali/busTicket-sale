@@ -2,79 +2,113 @@
 
 namespace App\repositories;
 
-use App\Models\companyInfo;
 use App\Models\Schedule;
-use Illuminate\Support\Facades\DB;
 
 class ScheduleRepository
 {
-    /* query for store a new schedule */
+    /**
+     * query for store a new schedule.
+     *
+     * @param array $data
+     */
     public function store($data)
     {
-        $schedule = Schedule::create($data);
-
-        return $schedule;
+        Schedule::create($data);
     }
 
-    /* query for update a schedule */
+    /**
+     * query for update a schedule.
+     *
+     * @param int $id
+     * @param array $data
+
+     */
     public function update($id, $data)
     {
-        $schedule = Schedule::find($id);
-        $schedule->update($data);
-
-        return $schedule;
+        $schedule = Schedule::find($id)->update($data);
     }
 
-    /* fetch all dates match to request date for register a new schedule */
-    public function reserveDates($vehicleId)
+    /**
+     * fetch all dates match to request date for register a new schedule.
+     *
+     * @param int $vehicleId
+     * @return array $reservedDates
+     */
+    public function reserveDates(int $vehicleId)
     {
-        $reserved = Schedule::where('vehicle_id', $vehicleId)->select('date','end_date')
+        $reservedDates = Schedule::where('vehicle_id', $vehicleId)->select('date','end_date')
             ->get()->toArray();
 
-        return $reserved;
+        return $reservedDates;
     }
 
-    /* fetch list of all travel schedules*/
+    /**
+     * fetch list of all travel schedules.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public function list()
     {
-        $scheduls = Schedule::query()->get();
-
-        return $scheduls;
+        return Schedule::query()->get();
     }
 
-    /* fetch available vehicles in a specific date, origin and destination */
+    /**
+     * fetch available vehicles in a specific date, origin and destination.
+     *
+     * @param array $data
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public function getScheduleList($data)
     {
         $vehicleSelect = ['id', 'model', 'capacity', 'description'];
 
-        $schedules = Schedule::query()->ScheduleVehicle()->ScheduleSelection($data)
+        return Schedule::query()->ScheduleVehicle()->ScheduleSelection($data)
             ->Filter($data['filter'], $data['order'])->get();
-
-        return $schedules;
     }
 
-    public function getVehicleId($id)
+    /**
+     * query to get vehicle id related to a specific schedule.
+     *
+     * @param int $id
+     * @return int $vehicleId
+     */
+    public function getVehicleId(int $id)
     {
-        $id = Schedule::query()->where('id', $id)->value('vehicle_id');
+        $vehicleId = Schedule::query()->where('id', $id)->value('vehicle_id');
 
-        return $id;
+        return $vehicleId;
     }
 
-    public function getPrice($id)
+    /**
+     * get price of a specific schedule.
+     *
+     * @param int $id
+     * @return int $price
+     */
+    public function getPrice(int $id)
     {
         $price = Schedule::query()->where('id', $id)->value('price');
 
         return $price;
     }
 
-    public function decrementRemainingCapacity($id)
+    /**
+     * decrease capacity of an schedule.
+     *
+     * @param int $id
+     */
+    public function decrementRemainingCapacity(int $id)
     {
-        $capacity = Schedule::query()->find($id)->decrement('remaining_capacity');
+        Schedule::query()->find($id)->decrement('remaining_capacity');
     }
 
-    public function incrementRemainingCapacity($id)
+    /**
+     * increase capacity of an schedule.
+     *
+     * @param int $id
+     */
+    public function incrementRemainingCapacity(int $id)
     {
-        $capacity = Schedule::query()->find($id)->increment('remaining_capacity');
+        Schedule::query()->find($id)->increment('remaining_capacity');
     }
-
 }

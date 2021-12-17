@@ -1,15 +1,15 @@
 <?php
-
-
 namespace App\repositories;
 
-
 use App\Models\Comment;
-use App\Models\companyInfo;
 
 class CommentRepository
 {
-    /* fetch comments of companies from database */
+    /**
+     * fetch comments of companies from database.
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public function getComment()
     {
         $select = ['id', 'name'];
@@ -17,7 +17,4 @@ class CommentRepository
 
         return $comments;
     }
-
-
-
 }

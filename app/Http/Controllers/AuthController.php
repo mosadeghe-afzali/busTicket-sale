@@ -21,7 +21,13 @@ class AuthController extends Controller
     public $roleRepository;
     public $userRoleRepository;
 
-    /* injection of UserRepository, RoleRepository and RoleUserRepository dependencies to this class: */
+    /**
+     * Create a new user instance.
+     *
+     * @param UserRepository $userRepository
+     * @param RoleRepository $roleRepository
+     * @param UserRoleRepository $userRoleRepository
+     */
     public function __construct(UserRepository $userRepository,
                                 RoleRepository $roleRepository,
                                 UserRoleRepository $userRoleRepository)
@@ -31,7 +37,12 @@ class AuthController extends Controller
         $this->userRoleRepository = $userRoleRepository;
     }
 
-    /* register of a new user and set its role in database */
+    /**
+     * register of a new user and set its role in database.
+     *
+     * @param \App\Http\Requests\UserRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function store(UserRequest $request)
     {
         $data =
@@ -59,7 +70,12 @@ class AuthController extends Controller
         );
     }
 
-    /* login users in site */
+    /**
+     * login users in site
+     *
+     * @param \App\Http\Requests\LoginRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function login(LoginRequest $request)
     {
         $user = $this->userRepository->checkUser($request->email);
